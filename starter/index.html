@@ -19,6 +19,8 @@
     <link href="assets/css/default/app.min.css" rel="stylesheet" />
     <link href="assets/css/style.css" rel="stylesheet" />
     <!-- ================== END core-css ================== -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
   </head>
   <body>
     <!-- BEGIN #app -->
@@ -51,7 +53,7 @@
           <div class="col-xl-4 col-lg-6">
             <div class="panel panel-inverse">
               <div class="panel-heading">
-                <h4 class="panel-title">To do (<span id="to-do-tasks-count">5</span>)</h4>
+                <h4 class="panel-title">To do (<span id="to-do-tasks-count">0</span>)</h4>
               </div>
               <div class="list-group list-group-flush rounded-bottom overflow-hidden panel-body p-0" id="to-do-tasks">
                 <!-- TO DO TASKS HERE -->
@@ -67,7 +69,7 @@
             <div class="panel panel-inverse">
               <div class="panel-heading">
                 <h4 class="panel-title">
-                  In Progress (<span id="in-progress-tasks-count">4</span>)
+                  In Progress (<span id="in-progress-tasks-count">0</span>)
                 </h4>
               </div>
               <div class="list-group list-group-flush rounded-bottom overflow-hidden panel-body p-0" id="in-progress-tasks">
@@ -82,7 +84,7 @@
           <div class="col-xl-4 col-lg-6">
             <div class="panel panel-inverse">
               <div class="panel-heading">
-                <h4 class="panel-title">Done (<span id="done-tasks-count">4</span>)</h4>
+                <h4 class="panel-title">Done (<span id="done-tasks-count">0</span>)</h4>
               </div>
               <div class="list-group list-group-flush rounded-bottom overflow-hidden panel-body p-0" id="done-tasks">
                 <!-- DONE TASKS HERE -->
@@ -131,7 +133,7 @@
                     <div class="ms-3" id="type">
                       <div class="form-check mb-1">
                         <input class="form-check-input" name="task-type" type="radio" value="Feature" id="task-type-feature" required>
-                        <label class="form-check-label" for="task-type-feature">Feature</label>
+                        <label class="form-check-label" for="task-type-feature" >Feature</label>
                       </div>
                       <div class="form-check">
                         <input class="form-check-input" name="task-type" type="radio" value="Bug" id="task-type-bug"/>
@@ -171,8 +173,8 @@
               </div>
               <div class="modal-footer">
                 <button href="#" class="btn btn-white" data-bs-dismiss="modal"  onclick="hideenmodal()">Cancel</button>
-                <!-- <button type="submit" name="delete" class="btn btn-danger task-action-btn" id="task-delete-btn">Delete</button>
-                <button type="submit" name="update" class="btn btn-warning task-action-btn" id="task-update-btn">Update</button> -->
+                 <!-- <button type="submit" name="delete" class="btn btn-danger task-action-btn" id="task-delete-btn">Delete</button>
+                <button type="submit" name="update" class="btn btn-warning task-action-btn" id="task-update-btn">Update</button>  -->
                 <button type="submit" name="add" class="btn btn-primary task-action-btn" id="task-save-btn" onclick="ajouter()" >Add</button>
 
               </div>

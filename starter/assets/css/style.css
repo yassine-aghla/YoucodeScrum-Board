@@ -24,7 +24,19 @@
 .delete-task {
     margin-top: 10px;
 }
-.task-action-btn{
-    margin-top: 10px;
+
+.btn {
+    margin-top: -10px;
 }
-  
+.update-delete{
+    margin-top:20px;
+
+}
+.btntype{
+    background-color: blue;
+    border: none;
+}
+.btnpriority{
+    background-color: rgb(227, 223, 223);
+    border: none;
+}

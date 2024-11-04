@@ -1,12 +1,3 @@
-let array = JSON.parse(localStorage.getItem("MyStorage")) || [];
-let title = document.getElementById("task-title").value;
-let type = document.querySelector('input[name="task-type"]:checked').value;
-let priority = document.getElementById("task-priority").value;
-let status = document.getElementById("task-status").value;
-let date = document.getElementById("task-date").value;
-let description = document.getElementById("task-description").value;
-let taskItem = document.createElement("div");
-
 function displaymodal() {
     let modal = document.getElementById("modal-dialog");
        modal.style.display="block";
@@ -16,79 +7,101 @@ function displaymodal() {
     modal.style.display="none";
   }
  
+  let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
  
+  const toDoTasksElement = document.getElementById('to-do-tasks');
+  const inProgressTasksElement = document.getElementById('in-progress-tasks');
+  const doneTasksElement = document.getElementById('done-tasks');
+  let title = document.getElementById("task-title")
+  let feature = document.getElementById('task-type-feature')
+  let type= document.getElementById('task-type-bug')
+  let date = document.getElementById("task-date")
+  let description = document.getElementById("task-description")
+  let donecount = document.getElementById("done-tasks-count");
+ 
+  function loadTasks() {
+    toDoTasksElement.innerHTML = '';
+    inProgressTasksElement.innerHTML = '';
+    doneTasksElement.innerHTML = '';
+    
+    tasks.forEach((task, index) => {
+      displayTask(task, index);
+    });
+  }
   
-document.getElementById("form-task").addEventListener("submit", function(event) {
-
-  event.preventDefault();
-}
-
-  // renderTasks()
  
+  function displayTask(task, index) {
+    const taskElement = document.createElement('div');
+    taskElement.classList.add('list-group-item');
+    taskElement.innerHTML = `
+      <h5>${task.title}</h5>
+      <p>${task.description}</p>
+    <p> crated in ${task.date}</p>
+    <div >
+    <button class="btntype" > ${task.type}</button>
+      <button class="btnpriority"> ${task.priority}</button>
+      </div>
+      <div class=update-delete>
+        <button onclick="editTask(${index})" class="btn btn-warning btn-sm">Update</button>
+        <button onclick="deleteTask(${index})" class="btn btn-danger btn-sm">Delete</button>
+      </div>
+    `;
+  
+    if (task.status === 'To Do') {
+      toDoTasksElement.appendChild(taskElement);
+      let numb = document.getElementById("to-do-tasks-count").childElementCount;
+    
+    } else if (task.status === 'In Progress') {
+      inProgressTasksElement.appendChild(taskElement);
+      let numb = document.getElementById("in-progress-tasks-count").childElementCount;
+    
+    } else if (task.status === 'Done') {
+      doneTasksElement.appendChild(taskElement);
+      let numb = document.getElementById("done-tasks-count").childElementCount;
+      
+      
+    }
+  }
+  
+  
+  function saveTask() {
+    const title = document.getElementById('task-title').value;
+    const description = document.getElementById('task-description').value;
+    const priority = document.getElementById('task-priority').value;
+    const status = document.getElementById('task-status').value;
+    const index = document.getElementById('task-id').value;
+    const type= document.getElementById('task-type-bug').value;
+    const date = document.getElementById("task-date").value;
+    
+    const task = { title, description, priority, status , type, date };
+  
+    if (index === '') {
+      tasks.push(task);
+    } else {
+      tasks[index] = task;
+    }
+    
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+    loadTasks();
+    hideModal();
+  } 
+  function showModal() {
+    document.getElementById('modal-dialog').style.display = 'block';
+  }
+  
+  function hideModal() {
+    document.getElementById('modal-dialog').style.display = 'none';
+    document.getElementById('form-task').reset();
+    document.getElementById('task-id').value = '';
+  }
+  
 
-
-
-  // taskItem.classList.add("list-group-item", "task-item")
-  // taskItem.innerHTML = `
-  //  <button class="task">
-  //                 <div class="">
-  //                   <i class=""></i>
-  //                 </div>
-  //                 <div class="">
-  //                   <div class="">
-  //                   ${title}
-  //                   </div>
-  //                   <div class="">
-  //                     <div class=""> created in  ${date}</div>
-  //                     <div
-  //                       class=""
-  //                       title="There is hardly anything more frustrating than having to look for current requirements in tens of comments under the actual description or having to decide which commenter is actually authorized to change the requirements. The goal here is to keep all the up-to-date requirements and details in the main/primary description of a task. Even though the information in comments may affect initial criteria, just update this primary description accordingly."
-  //                     >
-  //                     ${description}
-  //                     </div>
-  //                   </div>
-  //                   <div class="">
-  //                     <span class="btn btn-primary">${type}</span>
-  //                     <span class="btn btn-white">${priority}</span>
-  //                   </div>
-  //                   <button class="btn btn-danger btn-sm delete-task" id="task-delete-btn" onclick="DeleteTaskEvent(this)" >Supprimer</button>
-  //                   <button type="submit" name="update" class="btn btn-warning task-action-btn" id="task-update-btn" >Update</button>
-  //                 </div>
-                 
-  //               </button>
-  // `;
-
-  if (status === "To Do") {
-    document.getElementById("to-do-tasks").appendChild(taskItem);
-
-  } else if (status === "In Progress") {
-    document.getElementById("in-progress-tasks").appendChild(taskItem);
-  } else if (status === "Done") {
-    document.getElementById("done-tasks").appendChild(taskItem);
+  document.getElementById('task-save-btn').addEventListener('click', (e) => {
+    e.preventDefault();
+    saveTask();
+  });
+  
  
-  }
-
-  document.getElementById("form-task").reset();
-  hideenmodal();
-
-
- function DeleteTaskEvent() {
-  const deleteButton = document.querySelector("#task-delete-btn");
-  deleteButton.addEventListener("click", function() {
-    taskItem.remove();
-    });
-  }
-
-  function updateTask(taskId, newText) {
-    const taskIndex = tasks.findIndex(task => task.id === taskId);
-    tasks[taskIndex].text = newText;
-    renderTasks();
-
-    // SweetAlert pour confirmer la mise à jour
-    Swal.fire({
-        title: 'Task Updated!',
-        text: `Task updated to: "${newText}"`,
-        icon: 'info',
-        confirmButtonText: 'Got it!'
-    });
-}
+  loadTasks();
+  
