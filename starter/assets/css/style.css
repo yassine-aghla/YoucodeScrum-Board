@@ -1,0 +1,30 @@
+.pace {
+    display: none;
+}
+
+.main-style {
+    min-height: 100vh;
+    background: url(../img/cover/cover-scrum-board.png) no-repeat fixed;
+    background-size: 360px;
+    background-position: right bottom;
+}
+#modal-dialog{
+    display: none;
+    position: absolute;
+    top:20%;
+   right:30%;
+    width:40%;
+    justify-self: center;
+  }
+.task{
+    width:100%;
+    border:none;
+     padding-bottom: 10px; 
+}
+.delete-task {
+    margin-top: 10px;
+}
+.task-action-btn{
+    margin-top: 10px;
+}
+  
